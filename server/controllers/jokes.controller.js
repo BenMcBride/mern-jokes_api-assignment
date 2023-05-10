@@ -9,12 +9,12 @@ module.exports.findJokesAll = (req, res) => {
 
 module.exports.findJoke = (req, res) => {
   Joke.findOne({ _id: req.params.id })
-    .then((oneSingleJoke) => res.json({ joke: oneSingleJoke }))
+    .then((oneJoke) => res.json({ joke: oneJoke }))
     .catch((err) => res.json({ message: "Something went wrong", error: err }));
 };
 
 module.exports.findJokeRandom = (req, res) => {
-  Joke.findRandom({ _id: req.params.id })
+  Joke.find()
     .then((allJokes) => {
       let oneRandomJoke =
         allJokes[Math.floor(Math.random() * allJokes.length)];
@@ -30,7 +30,7 @@ module.exports.createJoke = (req, res) => {
 };
 
 module.exports.updateJoke = (req, res) => {
-  Joke.findOneAndUpdate(req.params.id, req.body, { new: true })
+  Joke.findOneAndUpdate({_id: req.params.id}, req.body, { new: true })
     .then((updatedJoke) => res.json({ joke: updatedJoke }))
     .catch((err) => res.json({ message: "Something went wrong", error: err }));
 };
